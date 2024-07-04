@@ -31,13 +31,9 @@
     <h1>Video</h1>
     <div class="player-container">
         <select id="channel-select" class="channel-select" onchange="changeChannel()">
-            <option value="https://m3u.in/XuEvCx.m3u">Канал 1</option>
-            <option value="https://m3u.in/123456.m3u">Канал 2</option>
-            <!-- Добавьте другие каналы в список -->
+            <option value="">Выберите канал</option>
         </select>
-        <video id="my_video_1" class="video-js vjs-default-skin" controls preload="auto" width="640" height="268" data-setup='{}'>
-            <source src="https://m3u.in/XuEvCx.m3u" type="application/x-mpegURL">
-        </video>
+        <video id="my_video_1" class="video-js vjs-default-skin" controls preload="auto" width="640" height="268" data-setup='{}'></video>
     </div>
     
     <h1>Radio</h1>
@@ -47,12 +43,45 @@
 
     <script>
         var player = videojs('my_video_1');
-        player.play();
+        var channelSelect = document.getElementById('channel-select');
+
+        fetch('https://m3u.in/XuEvCx.m3u')
+            .then(response => response.text())
+            .then(data => parseM3UData(data));
+
+        function parseM3UData(data) {
+            var lines = data.split('n');
+            var channels = [];
+
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i];
+
+                if (line.startsWith('#EXTINF')) {
+                    var channelName = line.split(',')[1];
+                    var channelURL = lines[i + 1];
+                    channels.push({ name: channelName, url: channelURL });
+                }
+            }
+
+            populateChannelSelect(channels);
+        }
+
+        function populateChannelSelect(channels) {
+            for (var i = 0; i < channels.length; i++) {
+                var option = document.createElement("option");
+                option.text = channels[i].name;
+                option.value = channels[i].url;
+                channelSelect.add(option);
+            }
+        }
 
         function changeChannel() {
-            var selectOption = document.getElementById('channel-select');
-            var selectedChannel = selectOption.options[selectOption.selectedIndex].value;
-            player.src(selectedChannel);
+            var selectedChannel = channelSelect.options[channelSelect.selectedIndex].value;
+
+            player.src({
+                src: selectedChannel,
+                type: 'application/x-mpegURL'
+            });
             player.play();
         }
     </script>
