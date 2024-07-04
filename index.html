@@ -4,11 +4,37 @@
     <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
     <script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
+    <style>
+        body {
+            background-image: url("https://oir.mobi/uploads/posts/2021-03/thumbs/1616542002_20-p-chernii-fon-dlya-prezentatsii-25.jpg");
+            background-size: cover;
+            text-align: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
 </head>
 <body>
-    <video id="my_video_1" class="video-js vjs-default-skin" controls preload="auto" width="640" height="268" data-setup='{}'>
-        <source src="https://m3u.in/XuEvCx.m3u" type="application/x-mpegURL">
-    </video>
+    <h1>Home</h1>
+    <div class="button-container">
+        <a href="#" class="button">Button 1</a>
+        <a href="#" class="button">Button 2</a>
+        <a href="#" class="button">Button 3</a>
+        <a href="#" class="button">Button 4</a>
+        <a href="#" class="button">Button 5</a>
+    </div>
+    
+    <h1>Video</h1>
+    <div class="player-container">
+        <video id="my_video_1" class="video-js vjs-default-skin" controls preload="auto" width="640" height="268" data-setup='{}'>
+            <source src="https://m3u.in/XuEvCx.m3u" type="application/x-mpegURL">
+        </video>
+    </div>
+    
+    <h1>Radio</h1>
+    <div class="player-container">
+        <!-- Вставьте код плеера для воспроизведения m3u ссылки радио здесь -->
+    </div>
 
     <script>
         var player = videojs('my_video_1');
@@ -16,4 +42,3 @@
     </script>
 </body>
 </html>
-
